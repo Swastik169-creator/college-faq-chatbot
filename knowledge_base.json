@@ -1,0 +1,174 @@
+{
+    "greeting": {
+        "patterns": [
+            "hello",
+            "hi",
+            "hey",
+            "good morning",
+            "good afternoon",
+            "good evening",
+            "is anyone there",
+            "hello chatbot"
+        ],
+        "regex_patterns": [
+            "\\b(hello|hi|hey)\\b"
+        ],
+        "responses": [
+            "Hello! Welcome to CollegeBot. How can I help you today?",
+            "Hi there! How can I assist you with college information?",
+            "Hello! What would you like to know about the college?"
+        ]
+    },
+
+    "admission": {
+        "patterns": [
+            "how can I apply",
+            "how do I apply for admission",
+            "admission process",
+            "how to get admission",
+            "when does admission start",
+            "what is the admission procedure",
+            "how can I take admission",
+            "admission requirements"
+        ],
+        "regex_patterns": [
+            "\\b(admission|apply|application|enrollment)\\b"
+        ],
+        "responses": [
+            "You can apply for admission through the official college admission process. Please check the required eligibility criteria and documents.",
+            "The admission process depends on the course. Please check the college admission guidelines for eligibility and application details."
+        ]
+    },
+
+    "fees": {
+        "patterns": [
+            "what are the fees",
+            "college fees",
+            "fee structure",
+            "tuition fees",
+            "how much does college cost",
+            "how much is the fee",
+            "course fees",
+            "semester fees"
+        ],
+        "regex_patterns": [
+            "\\b(fee|fees|tuition|cost|charges)\\b"
+        ],
+        "responses": [
+            "The fee structure varies depending on the course. Please check the official fee structure for detailed information.",
+            "Course and semester fees depend on the program you choose. Please refer to the college fee details."
+        ]
+    },
+
+    "courses": {
+        "patterns": [
+            "what courses are available",
+            "available courses",
+            "what programs do you offer",
+            "which courses are offered",
+            "courses offered by the college",
+            "what can I study",
+            "list of courses",
+            "degree programs"
+        ],
+        "regex_patterns": [
+            "\\b(course|courses|program|programs|degree)\\b"
+        ],
+        "responses": [
+            "The college offers multiple undergraduate and postgraduate programs. Please check the course catalog for the complete list.",
+            "You can explore the available programs based on your academic interests and eligibility."
+        ]
+    },
+
+    "hostel": {
+        "patterns": [
+            "is hostel available",
+            "do you have hostel",
+            "hostel facility",
+            "college hostel",
+            "is accommodation available",
+            "hostel facilities",
+            "where can students stay",
+            "hostel rooms"
+        ],
+        "regex_patterns": [
+            "\\b(hostel|accommodation|residence|dormitory)\\b"
+        ],
+        "responses": [
+            "Yes, hostel facilities are available for eligible students, subject to availability.",
+            "The college provides hostel facilities. Please contact the administration for room availability and hostel rules."
+        ]
+    },
+
+    "placements": {
+        "patterns": [
+            "how are placements",
+            "placement opportunities",
+            "does college provide placement",
+            "campus placement",
+            "placement assistance",
+            "companies visiting campus",
+            "job opportunities",
+            "placement cell"
+        ],
+        "regex_patterns": [
+            "\\b(placement|placements|career|job|jobs|recruitment)\\b"
+        ],
+        "responses": [
+            "The college provides placement assistance through its placement cell and career-related activities.",
+            "Placement opportunities depend on the course, student performance, and participating companies."
+        ]
+    },
+
+    "thanks": {
+        "patterns": [
+            "thank you",
+            "thanks",
+            "thank you so much",
+            "thanks a lot",
+            "that was helpful",
+            "appreciate your help",
+            "great thanks",
+            "okay thank you"
+        ],
+        "regex_patterns": [
+            "\\b(thanks|thank|appreciate)\\b"
+        ],
+        "responses": [
+            "You're welcome!",
+            "Happy to help!",
+            "You're welcome! Let me know if you have any other questions."
+        ]
+    },
+
+    "farewell": {
+        "patterns": [
+            "bye",
+            "goodbye",
+            "see you",
+            "see you later",
+            "quit",
+            "exit",
+            "I have to go",
+            "talk to you later"
+        ],
+        "regex_patterns": [
+            "\\b(bye|goodbye|exit|quit)\\b"
+        ],
+        "responses": [
+            "Goodbye! Have a great day!",
+            "See you later! Good luck with your studies!",
+            "Goodbye! Feel free to come back if you have more questions."
+        ]
+    },
+
+    "unknown": {
+        "patterns": [],
+        "regex_patterns": [],
+        "responses": [
+            "I did not quite understand that. Could you please rephrase your question?",
+            "I'm not sure about that. Please ask me something related to the college.",
+            "Sorry, I don't have information about that yet. Try asking about admissions, fees, courses, hostel, or placements."
+        ]
+    }
+}
