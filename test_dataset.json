@@ -1,0 +1,98 @@
+[
+    {
+        "question": "I want to know how to apply for admission",
+        "intent": "admission"
+    },
+    {
+        "question": "What is the process for getting admission",
+        "intent": "admission"
+    },
+    {
+        "question": "How do I enroll in the college",
+        "intent": "admission"
+    },
+    {
+        "question": "What are the available programs",
+        "intent": "courses"
+    },
+    {
+        "question": "Which courses can I study",
+        "intent": "courses"
+    },
+    {
+        "question": "What programs does the college offer",
+        "intent": "courses"
+    },
+    {
+        "question": "When is the farewell event",
+        "intent": "farewell"
+    },
+    {
+        "question": "Tell me about the farewell",
+        "intent": "farewell"
+    },
+    {
+        "question": "Is there a farewell ceremony",
+        "intent": "farewell"
+    },
+    {
+        "question": "How much does the college cost",
+        "intent": "fees"
+    },
+    {
+        "question": "What is the fee structure",
+        "intent": "fees"
+    },
+    {
+        "question": "How much are the tuition charges",
+        "intent": "fees"
+    },
+    {
+        "question": "Hi there",
+        "intent": "greeting"
+    },
+    {
+        "question": "Good to see you",
+        "intent": "greeting"
+    },
+    {
+        "question": "Hello there chatbot",
+        "intent": "greeting"
+    },
+    {
+        "question": "Is hostel accommodation available",
+        "intent": "hostel"
+    },
+    {
+        "question": "Can students stay in the hostel",
+        "intent": "hostel"
+    },
+    {
+        "question": "Do you have student accommodation",
+        "intent": "hostel"
+    },
+    {
+        "question": "Does the college help with jobs",
+        "intent": "placements"
+    },
+    {
+        "question": "What are the placement opportunities",
+        "intent": "placements"
+    },
+    {
+        "question": "Tell me about campus placements",
+        "intent": "placements"
+    },
+    {
+        "question": "Thank you for the information",
+        "intent": "thanks"
+    },
+    {
+        "question": "Thanks for your help",
+        "intent": "thanks"
+    },
+    {
+        "question": "I appreciate your help",
+        "intent": "thanks"
+    }
+]

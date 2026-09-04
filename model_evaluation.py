@@ -68,6 +68,28 @@ def prepare_training_data():
     return training_texts, intent_labels
 
 
+def load_test_data():
+    """Load unseen test questions and their intent labels."""
+
+    with open("test_dataset.json", "r", encoding="utf-8") as file:
+        test_data = json.load(file)
+
+    test_questions = []
+    test_labels = []
+
+    for item in test_data:
+
+        test_questions.append(
+            preprocess_text(item["question"])
+        )
+
+        test_labels.append(
+            item["intent"]
+        )
+
+    return test_questions, test_labels
+
+
 if __name__ == "__main__":
 
     print("=" * 60)
@@ -75,7 +97,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # -----------------------------------
-    # Prepare training data
+    # Prepare Training Data
     # -----------------------------------
 
     X, y = prepare_training_data()
@@ -111,33 +133,54 @@ if __name__ == "__main__":
     print("Model training completed successfully.")
 
     # -----------------------------------
+    # Load Test Dataset
+    # -----------------------------------
+
+    test_questions, test_labels = load_test_data()
+
+    print(f"\nTotal test examples: {len(test_questions)}")
+
+    # -----------------------------------
+    # Transform Test Data
+    # -----------------------------------
+
+    X_test_tfidf = vectorizer.transform(
+        test_questions
+    )
+
+    # -----------------------------------
     # Predictions
     # -----------------------------------
 
-    predictions = model.predict(X_tfidf)
+    predictions = model.predict(
+        X_test_tfidf
+    )
 
     # -----------------------------------
     # Evaluation Metrics
     # -----------------------------------
 
-    accuracy = accuracy_score(y, predictions)
+    accuracy = accuracy_score(
+        test_labels,
+        predictions
+    )
 
     precision = precision_score(
-        y,
+        test_labels,
         predictions,
         average="weighted",
         zero_division=0
     )
 
     recall = recall_score(
-        y,
+        test_labels,
         predictions,
         average="weighted",
         zero_division=0
     )
 
     f1 = f1_score(
-        y,
+        test_labels,
         predictions,
         average="weighted",
         zero_division=0
@@ -162,7 +205,7 @@ if __name__ == "__main__":
 
     print(
         classification_report(
-            y,
+            test_labels,
             predictions,
             zero_division=0
         )
@@ -176,56 +219,60 @@ if __name__ == "__main__":
     print("             CONFUSION MATRIX")
     print("=" * 60)
 
-    matrix = confusion_matrix(y, predictions)
+    matrix = confusion_matrix(
+        test_labels,
+        predictions
+    )
 
-print(matrix)
+    print(matrix)
 
-# -----------------------------------
-# Confusion Matrix Visualization
-# -----------------------------------
+    # -----------------------------------
+    # Confusion Matrix Visualization
+    # -----------------------------------
 
-labels = sorted(set(y))
+    labels = sorted(set(test_labels))
 
-plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(8, 6))
 
-plt.imshow(matrix)
+    plt.imshow(matrix)
 
-plt.title("Confusion Matrix")
-plt.xlabel("Predicted Intent")
-plt.ylabel("Actual Intent")
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted Intent")
+    plt.ylabel("Actual Intent")
 
-plt.xticks(
-    range(len(labels)),
-    labels,
-    rotation=45,
-    ha="right"
-)
+    plt.xticks(
+        range(len(labels)),
+        labels,
+        rotation=45,
+        ha="right"
+    )
 
-plt.yticks(
-    range(len(labels)),
-    labels
-)
+    plt.yticks(
+        range(len(labels)),
+        labels
+    )
 
-for i in range(len(labels)):
-    for j in range(len(labels)):
-        plt.text(
-            j,
-            i,
-            matrix[i, j],
-            ha="center",
-            va="center"
-        )
+    for i in range(len(labels)):
+        for j in range(len(labels)):
 
-plt.tight_layout()
+            plt.text(
+                j,
+                i,
+                matrix[i, j],
+                ha="center",
+                va="center"
+            )
 
-plt.savefig(
-    "outputs/confusion_matrix.png",
-    dpi=300
-)
+    plt.tight_layout()
 
-plt.close()
+    plt.savefig(
+        "outputs/confusion_matrix.png",
+        dpi=300
+    )
 
-print("\nConfusion matrix saved to:")
-print("outputs/confusion_matrix.png")
+    plt.close()
 
-print("\nModel evaluation completed successfully.")
+    print("\nConfusion matrix saved to:")
+    print("outputs/confusion_matrix.png")
+
+    print("\nModel evaluation completed successfully.")
