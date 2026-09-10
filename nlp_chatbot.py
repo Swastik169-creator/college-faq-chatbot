@@ -1,6 +1,7 @@
 
 import json
 import re
+import random
 import nltk
 
 from nltk.corpus import stopwords
@@ -122,10 +123,14 @@ def train_model(tfidf_matrix, labels):
 def predict_intent(
     user_input,
     vectorizer,
-    model
+    model,
+    threshold=0.15
 ):
     """
-    Predict the intent of a new user input.
+    Predict intent and confidence score.
+
+    If confidence is below the threshold,
+    return 'unknown' intent.
     """
 
     processed_input = preprocess_text(
@@ -136,11 +141,20 @@ def predict_intent(
         [processed_input]
     )
 
-    predicted_intent = model.predict(
+    probabilities = model.predict_proba(
         input_vector
     )[0]
 
-    return predicted_intent
+    best_index = probabilities.argmax()
+
+    confidence = probabilities[best_index]
+
+    predicted_intent = model.classes_[best_index]
+
+    if confidence < threshold:
+        predicted_intent = "unknown"
+
+    return predicted_intent, confidence
 
 
 if __name__ == "__main__":
@@ -192,33 +206,72 @@ if __name__ == "__main__":
 
     print("Model training completed successfully.")
 
+def get_response(intent):
+    """
+    Get a response for the predicted intent
+    from the knowledge base.
+    """
+
+    if intent == "unknown":
+        return "Sorry, I don't have information about that."
+
+    responses = knowledge_base.get(
+        intent,
+        {}
+    ).get(
+        "responses",
+        []
+    )
+
+    if not responses:
+        return "Sorry, I don't have a response for that."
+
+    return random.choice(responses)
+
 
     # -----------------------------------
     # Test predictions
     # -----------------------------------
 
-    test_questions = [
-        "what are the tuition fees",
-        "do you provide accommodation",
-        "how can I apply",
-        "what courses are available",
-        "tell me about career opportunities"
-    ]
 
-    print("\nTesting Logistic Regression predictions...")
 
-    for question in test_questions:
+test_questions = [
+    "what are the tuition fees",
+    "do you provide accommodation",
+    "how can I apply",
+    "what courses are available",
+    "tell me about career opportunities",
+    "what is the weather today",
+    "who is the prime minister",
+    "how do I cook rice"
+]
 
-        predicted_intent = predict_intent(
-            question,
-            vectorizer,
-            model
-        )
+print("\nTesting Logistic Regression predictions...")
 
-        print(
-            f"\nQuestion: {question}"
-        )
+for question in test_questions:
 
-        print(
-            f"Predicted intent: {predicted_intent}"
-        )
+    predicted_intent, confidence = predict_intent(
+        question,
+        vectorizer,
+        model
+    )
+
+    print(
+        f"\nQuestion: {question}"
+    )
+
+    print(
+        f"Predicted intent: {predicted_intent}"
+    )
+
+    print(
+        f"Confidence score: {confidence:.4f}"
+    )
+
+    response = get_response(
+    predicted_intent
+)
+
+    print(
+    f"Response: {response}"
+)
