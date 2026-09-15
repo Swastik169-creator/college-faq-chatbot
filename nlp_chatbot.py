@@ -3,6 +3,7 @@ import json
 import re
 import random
 import nltk
+import pickle
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -119,6 +120,48 @@ def train_model(tfidf_matrix, labels):
 
     return model
 
+def save_model(
+    model,
+    vectorizer,
+    filename="chatbot_tfidf.pkl"
+):
+    """
+    Save the trained Logistic Regression model
+    and TF-IDF vectorizer.
+    """
+
+    model_data = {
+        "model": model,
+        "vectorizer": vectorizer
+    }
+
+    with open(filename, "wb") as file:
+        pickle.dump(model_data, file)
+
+    print(
+        f"\nModel saved successfully to: {filename}"
+    )
+
+
+def load_model(
+    filename="chatbot_tfidf.pkl"
+):
+    """
+    Load the saved model and TF-IDF vectorizer.
+    """
+
+    with open(filename, "rb") as file:
+        model_data = pickle.load(file)
+
+    model = model_data["model"]
+    vectorizer = model_data["vectorizer"]
+
+    print(
+        f"Model loaded successfully from: {filename}"
+    )
+
+    return model, vectorizer
+
 
 def predict_intent(
     user_input,
@@ -206,6 +249,12 @@ if __name__ == "__main__":
 
     print("Model training completed successfully.")
 
+    save_model(
+    model,
+    vectorizer
+    )
+    loaded_model, loaded_vectorizer = load_model()
+
 def get_response(intent):
     """
     Get a response for the predicted intent
@@ -251,10 +300,10 @@ print("\nTesting Logistic Regression predictions...")
 for question in test_questions:
 
     predicted_intent, confidence = predict_intent(
-        question,
-        vectorizer,
-        model
-    )
+    question,
+    loaded_vectorizer,
+    loaded_model
+)
 
     print(
         f"\nQuestion: {question}"
