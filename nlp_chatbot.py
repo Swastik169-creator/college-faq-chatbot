@@ -283,44 +283,63 @@ def get_response(intent):
     # -----------------------------------
 
 
+def chat(
+    model,
+    vectorizer
+):
+    """
+    Run the interactive NLP chatbot.
+    """
 
-test_questions = [
-    "what are the tuition fees",
-    "do you provide accommodation",
-    "how can I apply",
-    "what courses are available",
-    "tell me about career opportunities",
-    "what is the weather today",
-    "who is the prime minister",
-    "how do I cook rice"
-]
+    print("\n" + "=" * 60)
+    print("          COLLEGEBOT - NLP COLLEGE ASSISTANT")
+    print("=" * 60)
 
-print("\nTesting Logistic Regression predictions...")
+    print("\nType your question and press Enter.")
+    print("Type 'bye' to exit.\n")
 
-for question in test_questions:
+    while True:
 
-    predicted_intent, confidence = predict_intent(
-    question,
-    loaded_vectorizer,
-    loaded_model
-)
+        user_input = input("You: ").strip()
 
-    print(
-        f"\nQuestion: {question}"
-    )
+        # Handle empty input
+        if not user_input:
+            print("Bot: Please type something.\n")
+            continue
 
-    print(
-        f"Predicted intent: {predicted_intent}"
-    )
+        # Predict intent and confidence
+        predicted_intent, confidence = predict_intent(
+            user_input,
+            vectorizer,
+            model
+        )
 
-    print(
-        f"Confidence score: {confidence:.4f}"
-    )
+        # Debug information
+        print(
+            f"[NLP detected intent: {predicted_intent}]"
+        )
 
-    response = get_response(
-    predicted_intent
-)
+        print(
+            f"[Confidence: {confidence:.4f}]"
+        )
 
-    print(
-    f"Response: {response}"
+        # Get response
+        response = get_response(
+            predicted_intent
+        )
+
+        print(
+            f"Bot: {response}\n"
+        )
+
+        # Exit on farewell
+        if predicted_intent == "farewell":
+            print("Chat session ended.")
+            break
+
+
+
+chat(
+    loaded_model,
+    loaded_vectorizer
 )
