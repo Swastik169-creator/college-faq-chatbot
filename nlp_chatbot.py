@@ -199,6 +199,47 @@ def predict_intent(
 
     return predicted_intent, confidence
 
+def test_novel_phrasings(
+    model,
+    vectorizer
+):
+    """
+    Test the NLP model on five new phrasings
+    that are different from the training patterns.
+    """
+
+    novel_questions = [
+        "What steps should I follow to secure admission?",
+        "How much money should I budget for my studies?",
+        "Is there somewhere on campus where students can stay?",
+        "Which academic programs can I choose from?",
+        "What kind of career support do graduates receive?"
+    ]
+
+    print("\n" + "=" * 60)
+    print("          NOVEL PHRASING TEST")
+    print("=" * 60)
+
+    for question in novel_questions:
+
+        predicted_intent, confidence = predict_intent(
+            question,
+            vectorizer,
+            model
+        )
+
+        print(
+            f"\nQuestion: {question}"
+        )
+
+        print(
+            f"Predicted intent: {predicted_intent}"
+        )
+
+        print(
+            f"Confidence score: {confidence:.4f}"
+        )
+
 
 if __name__ == "__main__":
 
@@ -338,6 +379,10 @@ def chat(
             break
 
 
+test_novel_phrasings(
+    loaded_model,
+    loaded_vectorizer
+)
 
 chat(
     loaded_model,
